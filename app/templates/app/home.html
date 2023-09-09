@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheather App</title>
+    <link rel="stylesheet" href="{% static 'app/css/bootstrap.min.css' %}">
+    <style>
+        hr {
+            border: none;
+            height: 5px;
+            background-color: red;
+        }
+        .text-with-background {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px; 
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body
+    {% if exception_occurred %}
+    style="background-image: url('https://images.pexels.com/photos/3008509/pexels-photo-3008509.jpeg?auto=compress&cs=tinysrgb&w=1600');"
+    {% else %}
+    style="background-image: url('{{ image_url }}');"
+    {% endif %}>
+    
+<div class="container mt-5">
+        <h2 class="text-warning text-center">Wheather App</h2>
+        <hr style="color: aliceblue;">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-group mb-3">
+                <input type="text" name="city" class="form-control" placeholder="Enter City" value="{{ city }}">
+                <div class="input-group-append mx-3">
+                    <button type="submit" class="btn btn-info">Search</button>
+                </div>
+            </div>
+        </form>
+        
+
+    <div class="container mt-5">
+        <div class="row text-with-background  p-3">
+                <div class="col-sm-8 p-5">
+                    <h2 class="text-white ">{{ temp }}&#176;C</h2>
+                    <h2 class="text-white mt-4">{{ city }}</h2>
+                </div>
+                <div class="col-sm-4 p-5">
+                    <p class="text-white">{{ description }}</p>
+                    <p class="text-white mt-4">{{ day }}</p>
+                </div>
+        </div>
+    </div>
+</div>
+
+{% if exception_occurred %}
+<script>
+    window.onload=function(){
+        alert("City information is not avaliable to our API");
+    }
+</script>
+ {% endif %}
+ <!--  style="background-image: url('https://images.pexels.com/photos/3008509/pexels-photo-3008509.jpeg?auto=compress&cs=tinysrgb&w=1600');" -->
+</body>
+</html>
